@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutrition & Dietetics – Complete Mind Map</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Sans+3:wght@400;500;600&display=swap');
+  :root {
+    --u1: #2563eb; --u1l: #dbeafe; --u1m: #93c5fd;
+    --u2: #16a34a; --u2l: #dcfce7; --u2m: #86efac;
+    --u3: #dc2626; --u3l: #fee2e2; --u3m: #fca5a5;
+    --u4: #9333ea; --u4l: #f3e8ff; --u4m: #d8b4fe;
+    --bg: #f8f7f4; --card: #ffffff; --text: #1a1a1a; --muted: #6b7280;
+    --border: #e5e7eb; --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  header { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%); padding: 2.5rem 2rem 2rem; text-align: center; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 2.1rem; color: #fff; letter-spacing: -0.5px; }
+  header p { color: #c7d2fe; font-size: 0.95rem; margin-top: 0.4rem; }
+  .toolbar { display: flex; gap: 0.6rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
+  .unit-btn { padding: 0.45rem 1.1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
+  .u1-btn { background: var(--u1); color: #fff; }
+  .u2-btn { background: var(--u2); color: #fff; }
+  .u3-btn { background: var(--u3); color: #fff; }
+  .u4-btn { background: var(--u4); color: #fff; }
+  .unit-btn:hover { transform: translateY(-1px); opacity: 0.88; }
+  .unit-btn.inactive { opacity: 0.35; }
+  .dl-btn { padding: 0.45rem 1.2rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: #fff; color: #312e81; border: 2px solid #fff; transition: all 0.2s; }
+  .dl-btn:hover { background: #e0e7ff; }
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+  /* UNIT SECTION */
+  .unit-section { margin-bottom: 2.5rem; }
+  .unit-header { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-radius: 14px; margin-bottom: 1.2rem; cursor: pointer; user-select: none; transition: opacity 0.2s; }
+  .unit-header:hover { opacity: 0.85; }
+  .unit-number { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
+  .unit-title { flex: 1; }
+  .unit-title h2 { font-family: 'Playfair Display', serif; font-size: 1.35rem; }
+  .unit-title p { font-size: 0.83rem; margin-top: 0.2rem; opacity: 0.75; }
+  .chevron { font-size: 1.2rem; transition: transform 0.3s; }
+  .collapsed .chevron { transform: rotate(-90deg); }
+  /* TOPIC GRID */
+  .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+  .topic-card { background: var(--card); border-radius: 12px; border: 1.5px solid var(--border); box-shadow: var(--shadow); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+  .topic-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.12); }
+  .card-header { padding: 0.85rem 1.1rem 0.7rem; display: flex; align-items: center; gap: 0.7rem; }
+  .card-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .card-title { font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+  .card-body { padding: 0 1.1rem 1rem; display: none; border-top: 1px solid var(--border); margin-top: 0.1rem; padding-top: 0.75rem; }
+  .topic-card.open .card-body { display: block; }
+  .card-body ul { list-style: none; padding: 0; }
+  .card-body ul li { font-size: 0.84rem; padding: 0.28rem 0; color: var(--muted); display: flex; gap: 0.5rem; line-height: 1.5; }
+  .card-body ul li::before { content: "▸"; flex-shrink: 0; font-size: 0.7rem; margin-top: 0.2rem; }
+  .card-body .sub-group { margin-top: 0.6rem; }
+  .card-body .sub-group strong { font-size: 0.82rem; font-weight: 600; color: var(--text); display: block; margin-bottom: 0.3rem; }
+  .tag { display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.18rem 0.55rem; border-radius: 999px; margin: 0.1rem 0.1rem 0; }
+  .expand-hint { font-size: 0.75rem; color: var(--muted); text-align: right; padding: 0 1.1rem 0.5rem; }
+  /* UNIT COLORS */
+  .u1 .unit-header { background: var(--u1l); }
+  .u1 .unit-number { background: var(--u1); }
+  .u1 .unit-title h2 { color: var(--u1); }
+  .u1 .unit-title p { color: var(--u1); }
+  .u1 .card-header { background: var(--u1l); }
+  .u1 .card-icon { background: var(--u1m); }
+  .u1 .card-title { color: var(--u1); }
+  .u1 li::before { color: var(--u1) !important; }
+  .u1 .tag { background: var(--u1l); color: var(--u1); }
+  .u2 .unit-header { background: var(--u2l); }
+  .u2 .unit-number { background: var(--u2); }
+  .u2 .unit-title h2 { color: var(--u2); }
+  .u2 .unit-title p { color: var(--u2); }
+  .u2 .card-header { background: var(--u2l); }
+  .u2 .card-icon { background: var(--u2m); }
+  .u2 .card-title { color: var(--u2); }
+  .u2 li::before { color: var(--u2) !important; }
+  .u2 .tag { background: var(--u2l); color: var(--u2); }
+  .u3 .unit-header { background: var(--u3l); }
+  .u3 .unit-number { background: var(--u3); }
+  .u3 .unit-title h2 { color: var(--u3); }
+  .u3 .unit-title p { color: var(--u3); }
+  .u3 .card-header { background: var(--u3l); }
+  .u3 .card-icon { background: var(--u3m); }
+  .u3 .card-title { color: var(--u3); }
+  .u3 li::before { color: var(--u3) !important; }
+  .u3 .tag { background: var(--u3l); color: var(--u3); }
+  .u4 .unit-header { background: var(--u4l); }
+  .u4 .unit-number { background: var(--u4); }
+  .u4 .unit-title h2 { color: var(--u4); }
+  .u4 .unit-title p { color: var(--u4); }
+  .u4 .card-header { background: var(--u4l); }
+  .u4 .card-icon { background: var(--u4m); }
+  .u4 .card-title { color: var(--u4); }
+  .u4 li::before { color: var(--u4) !important; }
+  .u4 .tag { background: var(--u4l); color: var(--u4); }
+  .legend { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 1.5rem 0 2rem; }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  @media print { header { background: #1e1b4b !important; } .unit-btn, .dl-btn { display: none; } .card-body { display: block !important; } }
+  @media (max-width: 600px) { header h1 { font-size: 1.5rem; } .topic-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>🌿 Nutrition & Dietetics</h1>
+  <p>Complete Revision Mind Map — All 4 Units</p>
+  <div class="toolbar">
+    <button class="unit-btn u1-btn" onclick="toggleUnit('u1',this)">Unit I – Intro & Basics</button>
+    <button class="unit-btn u2-btn" onclick="toggleUnit('u2',this)">Unit II – Diet Therapy</button>
+    <button class="unit-btn u3-btn" onclick="toggleUnit('u3',this)">Unit III – Infant & Child</button>
+    <button class="unit-btn u4-btn" onclick="toggleUnit('u4',this)">Unit IV – Community</button>
+    <button class="dl-btn" onclick="window.print()">⬇ Download / Print PDF</button>
+  </div>
+</header>
+
+<main>
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div> Unit I</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div> Unit II</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div> Unit III</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#9333ea"></div> Unit IV</div>
+  <span style="font-size:0.78rem;color:#9ca3af">Click any card to expand details</span>
+</div>
+
+<!-- ===================== UNIT I ===================== -->
+<div class="unit-section u1" id="unit-u1">
+  <div class="unit-header" onclick="toggleSection('unit-u1')">
+    <div class="unit-number">I</div>
+    <div class="unit-title">
+      <h2>Introduction to Nutrition &amp; Dietetics</h2>
+      <p>Balanced diet · Nutrients · Food hygiene · Planning guides</p>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="topic-grid section-content">
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">⚖️</div><div class="card-title">Balanced Diet</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Definition</strong>
+          <ul><li>A diet that provides all essential nutrients in correct quantities and proportions to maintain health, growth and body functions.</li></ul>
+        </div>
+        <div class="sub-group"><strong>Factors on which it depends</strong>
+          <ul>
+            <li>Age – infants, children, adults, elderly have different needs</li>
+            <li>Sex – males generally need more calories; females need more iron</li>
+            <li>Physiological state – pregnancy, lactation increase requirements</li>
+            <li>Activity level – sedentary vs heavy manual labour</li>
+            <li>Climate – cold climates need higher calorie intake</li>
+            <li>Health status – disease alters absorption and requirements</li>
+            <li>Body size and composition – larger body = higher BMR</li>
+            <li>Socio-economic status – affordability of food</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Key components</strong>
+          <ul>
+            <li>Cereals & millets – 60–70% energy</li>
+            <li>Pulses – protein source</li>
+            <li>Milk & dairy – calcium, protein</li>
+            <li>Vegetables & fruits – vitamins, fibre</li>
+            <li>Fats & oils – essential fatty acids, fat-soluble vitamins</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">📋</div><div class="card-title">Factors in Diet Planning</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <ul>
+          <li>Nutritional adequacy – meets RDA (Recommended Dietary Allowance)</li>
+          <li>Food preferences & cultural habits – acceptability of foods</li>
+          <li>Budget & availability of foods</li>
+          <li>Season & regional food availability</li>
+          <li>Food allergies and intolerances</li>
+          <li>Cooking methods that preserve nutrients</li>
+          <li>Digestibility & satiety value</li>
+          <li>Meal pattern and frequency – 3 main meals + 2 snacks ideal</li>
+          <li>Psychological factors – appetite, colour, texture</li>
+        </ul>
+        <div class="sub-group"><strong>Guides available for planning</strong>
+          <ul>
+            <li>ICMR Dietary Guidelines (India)</li>
+            <li>Food Pyramid / MyPlate (USDA)</li>
+            <li>Food Groups concept (5–7 groups)</li>
+            <li>RDA charts – ICMR 2020 updated values</li>
+            <li>Exchange lists – for diabetic/clinical planning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🦠</div><div class="card-title">Food Hygiene, Preparation &amp; Preservation</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Food Hygiene</strong>
+          <ul>
+            <li>Personal hygiene – handwashing, clean utensils</li>
+            <li>Safe storage – correct temperature, airtight containers</li>
+            <li>Preventing cross-contamination – raw vs cooked</li>
+            <li>Safe water use</li>
+            <li>FSSAI standards (India)</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Food Preparation</strong>
+          <ul>
+            <li>Methods: boiling, steaming, roasting, frying, pressure cooking</li>
+            <li>Nutrient-preserving techniques: minimum water, short cooking time</li>
+            <li>Avoid repeated heating</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Food Preservation</strong>
+          <ul>
+            <li>Drying / dehydration</li>
+            <li>Canning and bottling</li>
+            <li>Refrigeration and freezing</li>
+            <li>Pickling (acid/salt)</li>
+            <li>Fermentation</li>
+            <li>Irradiation</li>
+            <li>Chemical preservatives (BHA, sodium benzoate)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">💊</div><div class="card-title">Macronutrients – Review</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Carbohydrates</strong>
+          <ul>
+            <li>Simple (monosaccharides, disaccharides) vs Complex (starch, fibre)</li>
+            <li>4 kcal/g; main energy source; spares protein</li>
+            <li>Fibre: soluble (lowers cholesterol) & insoluble (aids bowel movement)</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Proteins</strong>
+          <ul>
+            <li>Complete (animal) vs Incomplete (plant) proteins</li>
+            <li>4 kcal/g; 20 amino acids – 9 essential</li>
+            <li>Functions: growth, repair, enzymes, hormones, immunity</li>
+            <li>BV – Biological Value: egg=100 (reference)</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Fats &amp; Lipids</strong>
+          <ul>
+            <li>9 kcal/g; saturated vs unsaturated vs trans fats</li>
+            <li>EFAs: linoleic (omega-6) & alpha-linolenic (omega-3)</li>
+            <li>Functions: fat-sol vitamins (A,D,E,K), insulation, hormones</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Water</strong>
+          <ul><li>60–70% of body weight; regulates temperature, transport medium</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🔬</div><div class="card-title">Micronutrients – Review</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Fat-soluble Vitamins</strong>
+          <ul>
+            <li>Vitamin A – vision, immunity; deficiency → night blindness</li>
+            <li>Vitamin D – calcium absorption, bone health; deficiency → rickets</li>
+            <li>Vitamin E – antioxidant; protects cell membranes</li>
+            <li>Vitamin K – blood clotting; deficiency → bleeding disorders</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Water-soluble Vitamins</strong>
+          <ul>
+            <li>Vitamin C – collagen, immunity; deficiency → scurvy</li>
+            <li>B-complex: B1 (beriberi), B2, B3 (pellagra), B6, B9 (folate – NTD), B12 (pernicious anaemia)</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Major Minerals</strong>
+          <ul>
+            <li>Calcium – bones, teeth, muscle contraction</li>
+            <li>Iron – haemoglobin; deficiency → anaemia</li>
+            <li>Iodine – thyroid hormones; deficiency → goitre, cretinism</li>
+            <li>Zinc – wound healing, immunity</li>
+            <li>Sodium/Potassium – fluid balance, nerve function</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================== UNIT II ===================== -->
+<div class="unit-section u2" id="unit-u2">
+  <div class="unit-header" onclick="toggleSection('unit-u2')">
+    <div class="unit-number">II</div>
+    <div class="unit-title">
+      <h2>Introduction to Diet Therapy</h2>
+      <p>Hospital diets · Therapeutic diets for diseases</p>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="topic-grid section-content">
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🏥</div><div class="card-title">Routine Hospital Diets</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <ul>
+          <li><strong>Regular/Normal diet</strong> – no restriction; meets all RDAs</li>
+          <li><strong>Soft diet</strong> – easy-to-chew; post-surgery, elderly</li>
+          <li><strong>Semi-liquid/Liquid diet</strong> – acute illness, swallowing difficulty</li>
+          <li><strong>Clear liquid diet</strong> – pre/post-operative; broth, juices</li>
+          <li><strong>Full liquid diet</strong> – milk, strained soups, custards</li>
+          <li><strong>High fibre diet</strong> – constipation, diverticulosis</li>
+          <li><strong>Low residue diet</strong> – IBD flare-ups, pre-colonoscopy</li>
+          <li><strong>High calorie-high protein</strong> – malnutrition, post-burns</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">❤️</div><div class="card-title">Cardiovascular Diseases</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Conditions: IHD, MI, Hypertension, Heart failure</strong></div>
+        <div class="sub-group"><strong>Diet principles</strong>
+          <ul>
+            <li>Low saturated fat (&lt;7% calories); use MUFA/PUFA</li>
+            <li>Low cholesterol (&lt;200 mg/day in high risk)</li>
+            <li>Low sodium (2–3 g/day) to control BP and oedema</li>
+            <li>High fibre (25–30 g/day) – oats, fruits, vegetables</li>
+            <li>Maintain ideal body weight (BMI 18.5–24.9)</li>
+            <li>Omega-3 fatty acids – fish, flaxseed; reduce triglycerides</li>
+            <li>Antioxidants – vitamins C & E; lycopene</li>
+            <li>Limit alcohol and caffeine</li>
+            <li>DASH diet for hypertension</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🫁</div><div class="card-title">Gastrointestinal Diseases</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Peptic Ulcer</strong>
+          <ul>
+            <li>Avoid spicy, acidic, fried foods; coffee; alcohol</li>
+            <li>Small frequent meals; bland, easily digestible foods</li>
+            <li>Adequate protein for tissue repair</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Diarrhoea / IBD</strong>
+          <ul>
+            <li>Low fibre, low fat during acute phase</li>
+            <li>ORS and adequate fluids – prevent dehydration</li>
+            <li>BRAT diet: Banana, Rice, Applesauce, Toast</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Constipation</strong>
+          <ul>
+            <li>High fibre (30–35 g/day); fruits, whole grains</li>
+            <li>Increase fluid intake (8–10 glasses/day)</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Liver disease / Cirrhosis</strong>
+          <ul>
+            <li>Low sodium; adequate protein (unless encephalopathy)</li>
+            <li>High calorie; restrict fat in fatty liver</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🫘</div><div class="card-title">Renal Disorders</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Acute/Chronic Renal Failure</strong>
+          <ul>
+            <li>Low protein (0.6–0.8 g/kg/day) – reduces uraemia</li>
+            <li>Low potassium – avoid bananas, potatoes, oranges</li>
+            <li>Low phosphorus – limit dairy, nuts, legumes</li>
+            <li>Low sodium – controls hypertension and oedema</li>
+            <li>Fluid restriction based on output + 500 ml</li>
+            <li>High calorie from carbohydrates to prevent catabolism</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Nephrotic syndrome</strong>
+          <ul>
+            <li>High protein to compensate urinary losses</li>
+            <li>Low sodium; low fat if hyperlipidaemia present</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Renal calculi (kidney stones)</strong>
+          <ul>
+            <li>High fluid intake (3+ litres/day) – dilutes urine</li>
+            <li>Restrict oxalate (spinach, tea, nuts) for oxalate stones</li>
+            <li>Low sodium and animal protein for calcium stones</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🩸</div><div class="card-title">Endocrine &amp; Metabolic Disorders</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Diabetes Mellitus (Type 1 & 2)</strong>
+          <ul>
+            <li>Carbohydrate counting; 45–60% calories from complex CHO</li>
+            <li>Low glycaemic index foods – oats, legumes, vegetables</li>
+            <li>High fibre slows glucose absorption</li>
+            <li>Low saturated fat; avoid trans fats</li>
+            <li>Regular meal timing to prevent hypoglycaemia</li>
+            <li>Exchange lists and portion control</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Obesity</strong>
+          <ul>
+            <li>Energy-restricted diet (500–1000 kcal deficit/day)</li>
+            <li>High protein, high fibre, low fat</li>
+            <li>Behaviour modification + physical activity</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Gout (Hyperuricaemia)</strong>
+          <ul>
+            <li>Low purine diet – avoid organ meats, shellfish, beer</li>
+            <li>High fluid intake; weight management</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Thyroid disorders</strong>
+          <ul>
+            <li>Hypothyroid – adequate iodine; weight management</li>
+            <li>Hyperthyroid – high calorie; avoid goitrogenic foods</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🤧</div><div class="card-title">Allergy, Infections &amp; Fevers</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Food Allergy</strong>
+          <ul>
+            <li>Elimination diet – identify and remove allergen</li>
+            <li>Common allergens: milk, eggs, nuts, wheat (gluten), shellfish</li>
+            <li>Coeliac disease – strict gluten-free diet</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Infections &amp; Fevers</strong>
+          <ul>
+            <li>Increased BMR (7% per 1°F rise in temp) → higher calorie need</li>
+            <li>High fluid intake to replace losses</li>
+            <li>High protein – 1.2–1.5 g/kg/day for tissue repair</li>
+            <li>Soft, easily digestible foods</li>
+            <li>Electrolyte replacement (sodium, potassium)</li>
+            <li>Vitamin C and zinc for immunity</li>
+            <li>TB diet: high calorie, high protein, adequate vitamins</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🔪</div><div class="card-title">Pre &amp; Post-Operative Stage</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Pre-operative</strong>
+          <ul>
+            <li>NPO (nil by mouth) 6–8 hours before surgery</li>
+            <li>Correct nutritional deficiencies beforehand</li>
+            <li>High protein, high vitamin C to aid wound healing</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Post-operative</strong>
+          <ul>
+            <li>Stage 1: IV fluids/clear liquids</li>
+            <li>Stage 2: Full liquid → soft diet</li>
+            <li>Stage 3: Return to normal / therapeutic diet</li>
+            <li>High protein (1.5–2 g/kg) – tissue repair</li>
+            <li>High vitamin C & zinc – collagen synthesis</li>
+            <li>Iron supplementation if blood loss</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">📉</div><div class="card-title">Deficiency Diseases, Over &amp; Underweight</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Malnutrition states</strong>
+          <ul>
+            <li>PEM – Protein Energy Malnutrition: Kwashiorkor (protein def.) vs Marasmus (energy+protein def.)</li>
+            <li>Micronutrient deficiencies: IDA (iron), VAD (vitamin A), IDD (iodine)</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Underweight management</strong>
+          <ul>
+            <li>High energy, high protein diet</li>
+            <li>Nutrient-dense foods – nuts, milk, legumes</li>
+            <li>6 small meals/day</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Overweight management</strong>
+          <ul>
+            <li>Calorie deficit (500 kcal below TDEE)</li>
+            <li>Avoid refined sugars, saturated fat, processed foods</li>
+            <li>Increase physical activity; behavioral counselling</li>
+            <li>BMI &gt;25 = overweight; &gt;30 = obese (WHO)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================== UNIT III ===================== -->
+<div class="unit-section u3" id="unit-u3">
+  <div class="unit-header" onclick="toggleSection('unit-u3')">
+    <div class="unit-number">III</div>
+    <div class="unit-title">
+      <h2>Infant &amp; Child Nutrition</h2>
+      <p>Feeding · Weaning · Sick child · School nutrition</p>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="topic-grid section-content">
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">👶</div><div class="card-title">Feeding Normal Infants</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Nutritional requirements (0–12 months)</strong>
+          <ul>
+            <li>Energy: ~100–120 kcal/kg/day (high due to rapid growth)</li>
+            <li>Protein: 1.5–2.2 g/kg/day</li>
+            <li>Fat: 40–50% of calories; DHA for brain development</li>
+            <li>Iron: needs supplementation after 6 months</li>
+            <li>Calcium: 200–260 mg/day (0–6m), 260–270 mg/day (6–12m)</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Breastfeeding</strong>
+          <ul>
+            <li>WHO recommends exclusive breastfeeding for 6 months</li>
+            <li>Colostrum (first milk) – rich in antibodies (IgA), proteins, vitamins</li>
+            <li>Breast milk ideal composition changes over time</li>
+            <li>Advantages: immunity, bonding, cost-effective, reduces SIDS</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Formula feeding (when breastfeeding not possible)</strong>
+          <ul>
+            <li>Iron-fortified infant formula</li>
+            <li>Do NOT use cow's milk &lt;12 months (kidney load, low iron)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🍼</div><div class="card-title">Feeding Premature Infants</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Factors to consider</strong>
+          <ul>
+            <li>Gestational age and birth weight (VLBW &lt;1500g; LBW &lt;2500g)</li>
+            <li>Weak suck/swallow reflex – may need gavage (tube) feeding</li>
+            <li>Immature gut – risk of NEC (Necrotising Enterocolitis)</li>
+            <li>Higher metabolic rate; rapid catch-up growth needed</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Nutritional requirements (higher than term infants)</strong>
+          <ul>
+            <li>Energy: 110–135 kcal/kg/day</li>
+            <li>Protein: 3–4 g/kg/day (for catch-up growth)</li>
+            <li>Calcium & phosphorus: higher for bone mineralisation</li>
+            <li>Vitamins D, A, C, E, K supplementation required</li>
+            <li>Iron supplementation from 2–4 weeks of age</li>
+            <li>Expressed breast milk is gold standard; fortification often needed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🥣</div><div class="card-title">Supplementary Feeding &amp; Weaning</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Supplementary feeding advantages</strong>
+          <ul>
+            <li>Fills energy-nutrient gap as breast milk alone becomes insufficient after 6 months</li>
+            <li>Provides iron, zinc, B12 not adequately in breast milk after 6m</li>
+            <li>Develops chewing skills and food acceptance</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Method of introduction</strong>
+          <ul>
+            <li>Start at 6 months; introduce ONE food at a time, 3–5 day gap</li>
+            <li>Begin with rice/dal kanji, mashed vegetables, fruit purees</li>
+            <li>Increase texture gradually: puree → mashed → chopped → family food</li>
+            <li>No added salt/sugar/honey under 1 year</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Weaning – effects on mother and child</strong>
+          <ul>
+            <li>Mother: menstrual cycle returns, risk of pregnancy increases, breast engorgement initially</li>
+            <li>Child: shift from passive (milk) to active (solid) nutrition; risk of infections if done abruptly or unhygienically</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🧠</div><div class="card-title">Psychology of Infant &amp; Child Feeding</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <ul>
+          <li>Feeding is a social/emotional experience as well as nutritional</li>
+          <li>Responsive feeding – respond to hunger/satiety cues; avoid force feeding</li>
+          <li>Food neophobia – common in toddlers; offer rejected foods 8–15 times</li>
+          <li>Avoid using food as reward or punishment</li>
+          <li>Positive mealtime environment – family meals, minimal distractions</li>
+          <li>Parent's anxiety can transfer to child's eating behaviour</li>
+          <li>Media influence on food choices in older children</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🤒</div><div class="card-title">Feeding the Sick Child &amp; Diseases in Childhood</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>General principles</strong>
+          <ul>
+            <li>Continue breastfeeding during illness</li>
+            <li>Small frequent meals; easy-to-digest foods</li>
+            <li>Adequate fluids/ORS to prevent dehydration</li>
+            <li>Catch-up feeding after recovery</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Common conditions</strong>
+          <ul>
+            <li>Diarrhoea – ORS, continue feeding, zinc supplementation</li>
+            <li>Fever – extra 10–12% energy per °C rise; fluids</li>
+            <li>Coeliac disease – strict gluten-free diet for life</li>
+            <li>PKU (Phenylketonuria) – low phenylalanine formula</li>
+            <li>Type 1 Diabetes – carb counting, insulin coordination</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Deficiency states in children</strong>
+          <ul>
+            <li>Marasmus – severe wasting; sunken eyes, skin and bones</li>
+            <li>Kwashiorkor – oedema, moon face, pot belly, hair discolouration</li>
+            <li>Vitamin A deficiency – bitot's spots, xerophthalmia</li>
+            <li>Rickets – bowed legs, delayed dentition; Vit D deficiency</li>
+            <li>Iron deficiency anaemia – pallor, poor concentration, fatigue</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🧒</div><div class="card-title">Pre-school Child Nutrition (1–6 yrs)</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Nutritional needs</strong>
+          <ul>
+            <li>Energy: 1000–1400 kcal/day (varies by age)</li>
+            <li>Protein: 1.1–1.5 g/kg/day</li>
+            <li>Iron: 7–10 mg/day; calcium: 700–1000 mg/day</li>
+            <li>Vitamin A, D, C from variety of foods</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Factors in diet planning</strong>
+          <ul>
+            <li>Small stomach capacity – small frequent meals (5–6/day)</li>
+            <li>Food preferences – involve child in choices</li>
+            <li>Texture, colour, presentation matter</li>
+            <li>Avoid choking hazards (whole nuts, hard raw vegetables)</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Common feeding problems</strong>
+          <ul>
+            <li>Food jags – eating only one food repeatedly</li>
+            <li>Poor appetite during slower growth phase (toddler period)</li>
+            <li>Dental caries from sticky sweet foods</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🏫</div><div class="card-title">School Lunch Programme</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Advantages</strong>
+          <ul>
+            <li>Ensures at least one balanced meal/day for school children</li>
+            <li>Improves attendance and enrolment (especially girls)</li>
+            <li>Reduces hunger and improves concentration and learning</li>
+            <li>Reduces nutritional deficiencies in vulnerable children</li>
+            <li>Promotes healthy food habits from early age</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Need in India</strong>
+          <ul>
+            <li>High prevalence of malnutrition and anaemia in school children</li>
+            <li>Mid-Day Meal Scheme (MDMS) – launched 1995, covers >120 million children</li>
+            <li>Provides 450 kcal + 12g protein to primary school children</li>
+            <li>Reduces dropout rate, especially in rural areas</li>
+            <li>PM POSHAN Shakti Nirman (renamed 2021)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================== UNIT IV ===================== -->
+<div class="unit-section u4" id="unit-u4">
+  <div class="unit-header" onclick="toggleSection('unit-u4')">
+    <div class="unit-number">IV</div>
+    <div class="unit-title">
+      <h2>Community Nutrition</h2>
+      <p>Special groups · Assessment · National programmes</p>
+    </div>
+    <span class="chevron">▾</span>
+  </div>
+  <div class="topic-grid section-content">
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🌍</div><div class="card-title">Community Nutrition Programmes</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Need for community nutrition programmes</strong>
+          <ul>
+            <li>High prevalence of malnutrition, hidden hunger (micronutrient deficiency)</li>
+            <li>Vulnerability of specific groups – pregnant women, infants, elderly</li>
+            <li>Link between nutrition, productivity and development (SDGs)</li>
+            <li>Need to bridge gap between dietary intake and requirements</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Key national programmes (India)</strong>
+          <ul>
+            <li>ICDS – Integrated Child Development Services (supplementary nutrition + health)</li>
+            <li>PM POSHAN (Mid-Day Meal) – school children</li>
+            <li>POSHAN Abhiyaan (National Nutrition Mission) – 2018</li>
+            <li>National Iron + Initiative – IDA in children & adolescents</li>
+            <li>Vitamin A Supplementation Programme</li>
+            <li>Iodine Deficiency Disorder (IDD) Control – universal salt iodisation</li>
+            <li>RMNCH+A – reproductive, maternal, newborn & child health</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🤰</div><div class="card-title">Nutritional Needs – Special Groups</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Pregnant women</strong>
+          <ul>
+            <li>+350 kcal/day (2nd trimester); +450 kcal (3rd trimester)</li>
+            <li>Protein: +23 g/day above normal requirement</li>
+            <li>Iron: 35 mg/day (ICMR); folate: 500 μg/day (prevent NTDs)</li>
+            <li>Calcium: 1200 mg/day; Iodine critical for fetal brain</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Lactating mothers</strong>
+          <ul>
+            <li>+500–600 kcal/day above normal</li>
+            <li>High fluid intake (2.5–3 litres); calcium 1200 mg/day</li>
+            <li>Protein +25 g/day; Vitamin A 950 μg RE/day</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Adolescents</strong>
+          <ul>
+            <li>Rapid growth spurt – high energy, protein, calcium, iron needs</li>
+            <li>Girls: iron-rich diet for menstrual losses</li>
+            <li>Zinc critical for sexual maturation</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Elderly (>60 years)</strong>
+          <ul>
+            <li>Reduced BMR – lower calorie needs</li>
+            <li>Adequate protein to prevent sarcopenia</li>
+            <li>Calcium + Vit D – prevent osteoporosis</li>
+            <li>High fibre – constipation prevention; B12 – absorption decreases with age</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🥜</div><div class="card-title">Cheap, Nutritious &amp; Vegetarian Substitutes</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Substitutes for non-vegetarian foods</strong>
+          <ul>
+            <li>Protein: pulses, legumes, soya, paneer, milk, tofu, groundnuts</li>
+            <li>Iron: dark leafy greens (palak, methi), bajra, jaggery, fortified foods</li>
+            <li>Vitamin B12: dairy, fortified cereals (challenging in pure vegan)</li>
+            <li>Omega-3: flaxseeds, walnuts, chia seeds</li>
+            <li>Zinc: pumpkin seeds, whole grains, legumes</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Cheap and nutritious food selection</strong>
+          <ul>
+            <li>Millets (bajra, jowar, ragi) – affordable, nutrient-dense</li>
+            <li>Seasonal local vegetables & fruits</li>
+            <li>Fermented foods – increase bioavailability (idli, dosa, curd)</li>
+            <li>Germinated/sprouted pulses – enhance iron & vitamin C</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">📚</div><div class="card-title">Nutrition Education</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Need</strong>
+          <ul>
+            <li>Improve dietary behaviours and food choices</li>
+            <li>Reduce nutrition-related diseases (PEM, NCDs)</li>
+            <li>Empower communities to achieve food security</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Methods</strong>
+          <ul>
+            <li>Individual counselling – diet history, personalised advice</li>
+            <li>Group talks – schools, PHCs, ASHA workers</li>
+            <li>Demonstrations – cooking, food preparation</li>
+            <li>Mass media – TV, radio, social media campaigns</li>
+            <li>Printed materials – posters, pamphlets, flip charts</li>
+            <li>Community kitchen gardens – promote local fresh produce</li>
+            <li>School-based nutrition education programmes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">📊</div><div class="card-title">Assessing Nutritional Status</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>ABCD Method</strong>
+          <ul>
+            <li><strong>A – Anthropometric:</strong> Weight, height, BMI, MUAC, head circumference, WAZ/HAZ/WHZ in children</li>
+            <li><strong>B – Biochemical:</strong> Haemoglobin, serum albumin, serum ferritin, vitamin levels, urine creatinine</li>
+            <li><strong>C – Clinical:</strong> Physical signs – pallor, oedema, bitot's spots, glossitis, goitre, skin changes</li>
+            <li><strong>D – Dietary:</strong> 24-hour recall, food frequency questionnaire (FFQ), food diary, dietary history</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Community/Group level</strong>
+          <ul>
+            <li>Surveys – NFHS (National Family Health Survey), NNS</li>
+            <li>Vital statistics – infant mortality rate, under-5 mortality</li>
+            <li>Ecological assessment – food supply, socioeconomic data</li>
+            <li>WHO growth standards for children</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🚨</div><div class="card-title">Current Nutritional Problems in India</div></div>
+      <p class="expand-hint">tap to expand</p>
+      <div class="card-body">
+        <div class="sub-group"><strong>Undernutrition</strong>
+          <ul>
+            <li>Stunting – 35.5% children under 5 (NFHS-5, 2019–21)</li>
+            <li>Wasting – 19.3%; Underweight – 32.1%</li>
+            <li>Anaemia – 67% children (6–59m), 57% women of reproductive age</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Overnutrition / Double burden</strong>
+          <ul>
+            <li>Rising obesity & overweight – especially urban populations</li>
+            <li>Diabetes, hypertension, CVD increasing – diet-related NCDs</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>Micronutrient deficiencies ("Hidden hunger")</strong>
+          <ul>
+            <li>Iron, Vitamin A, Iodine, Zinc, Vitamin D deficiencies widespread</li>
+          </ul>
+        </div>
+        <div class="sub-group"><strong>National response</strong>
+          <ul>
+            <li>POSHAN Abhiyaan 2.0 – targets stunting, wasting, anaemia, LBW</li>
+            <li>Fortification of staples (rice, wheat flour, salt with iron/folic acid/B12)</li>
+            <li>ICDS, NHM, SBM for sanitation (affects nutrition outcomes)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script>
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
+function toggleSection(id) {
+  const sec = document.getElementById(id);
+  const content = sec.querySelector('.section-content');
+  const hdr = sec.querySelector('.unit-header');
+  if (content.style.display === 'none') {
+    content.style.display = 'grid';
+    hdr.classList.remove('collapsed');
+  } else {
+    content.style.display = 'none';
+    hdr.classList.add('collapsed');
+  }
+}
+function toggleUnit(unitId, btn) {
+  const sec = document.getElementById('unit-' + unitId);
+  if (btn.classList.contains('inactive')) {
+    btn.classList.remove('inactive');
+    sec.style.display = '';
+  } else {
+    btn.classList.add('inactive');
+    sec.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>
