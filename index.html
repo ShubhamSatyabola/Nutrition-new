@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +13,42 @@
     --u4: #9333ea; --u4l: #f3e8ff; --u4m: #d8b4fe;
     --bg: #f8f7f4; --card: #ffffff; --text: #1a1a1a; --muted: #6b7280;
     --border: #e5e7eb; --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --header-sub: #c7d2fe;
   }
+  [data-theme="dark"] {
+    --u1l: #1e3a5f; --u1m: #1d4ed8;
+    --u2l: #14532d; --u2m: #15803d;
+    --u3l: #450a0a; --u3m: #991b1b;
+    --u4l: #3b0764; --u4m: #7e22ce;
+    --bg: #0f1117; --card: #1a1d27; --text: #e8e8f0; --muted: #9ca3af;
+    --border: #2d3148; --shadow: 0 2px 16px rgba(0,0,0,0.4);
+    --header-sub: #818cf8;
+  }
+  [data-theme="dark"] .u1 .unit-title h2 { color: #60a5fa; }
+  [data-theme="dark"] .u1 .unit-title p  { color: #60a5fa; }
+  [data-theme="dark"] .u1 .card-title    { color: #60a5fa; }
+  [data-theme="dark"] .u2 .unit-title h2 { color: #4ade80; }
+  [data-theme="dark"] .u2 .unit-title p  { color: #4ade80; }
+  [data-theme="dark"] .u2 .card-title    { color: #4ade80; }
+  [data-theme="dark"] .u3 .unit-title h2 { color: #f87171; }
+  [data-theme="dark"] .u3 .unit-title p  { color: #f87171; }
+  [data-theme="dark"] .u3 .card-title    { color: #f87171; }
+  [data-theme="dark"] .u4 .unit-title h2 { color: #c084fc; }
+  [data-theme="dark"] .u4 .unit-title p  { color: #c084fc; }
+  [data-theme="dark"] .u4 .card-title    { color: #c084fc; }
+  [data-theme="dark"] .u1 li::before { color: #60a5fa !important; }
+  [data-theme="dark"] .u2 li::before { color: #4ade80 !important; }
+  [data-theme="dark"] .u3 li::before { color: #f87171 !important; }
+  [data-theme="dark"] .u4 li::before { color: #c084fc !important; }
+  [data-theme="dark"] .u1 .tag { background: #1e3a5f; color: #60a5fa; }
+  [data-theme="dark"] .u2 .tag { background: #14532d; color: #4ade80; }
+  [data-theme="dark"] .u3 .tag { background: #450a0a; color: #f87171; }
+  [data-theme="dark"] .u4 .tag { background: #3b0764; color: #c084fc; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Source Sans 3', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
   header { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%); padding: 2.5rem 2rem 2rem; text-align: center; }
   header h1 { font-family: 'Playfair Display', serif; font-size: 2.1rem; color: #fff; letter-spacing: -0.5px; }
-  header p { color: #c7d2fe; font-size: 0.95rem; margin-top: 0.4rem; }
+  header p { color: var(--header-sub); font-size: 0.95rem; margin-top: 0.4rem; }
   .toolbar { display: flex; gap: 0.6rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
   .unit-btn { padding: 0.45rem 1.1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
   .u1-btn { background: var(--u1); color: #fff; }
@@ -29,6 +59,8 @@
   .unit-btn.inactive { opacity: 0.35; }
   .dl-btn { padding: 0.45rem 1.2rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: #fff; color: #312e81; border: 2px solid #fff; transition: all 0.2s; }
   .dl-btn:hover { background: #e0e7ff; }
+  .theme-btn { padding: 0.45rem 1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600; cursor: pointer; background: rgba(255,255,255,0.15); color: #fff; border: 2px solid rgba(255,255,255,0.4); transition: all 0.2s; backdrop-filter: blur(4px); }
+  .theme-btn:hover { background: rgba(255,255,255,0.25); }
   main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
   /* UNIT SECTION */
   .unit-section { margin-bottom: 2.5rem; }
@@ -109,6 +141,7 @@
     <button class="unit-btn u2-btn" onclick="toggleUnit('u2',this)">Unit II – Diet Therapy</button>
     <button class="unit-btn u3-btn" onclick="toggleUnit('u3',this)">Unit III – Infant & Child</button>
     <button class="unit-btn u4-btn" onclick="toggleUnit('u4',this)">Unit IV – Community</button>
+    <button class="theme-btn" id="themeToggle" onclick="toggleTheme()">🌙 Dark Mode</button>
     <button class="dl-btn" onclick="window.print()">⬇ Download / Print PDF</button>
   </div>
 </header>
@@ -907,6 +940,30 @@
 </main>
 
 <script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  if (html.getAttribute('data-theme') === 'dark') {
+    html.removeAttribute('data-theme');
+    btn.textContent = '🌙 Dark Mode';
+    localStorage.setItem('theme','light');
+  } else {
+    html.setAttribute('data-theme','dark');
+    btn.textContent = '☀️ Light Mode';
+    localStorage.setItem('theme','dark');
+  }
+}
+(function(){
+  const saved = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (saved === 'dark' || (!saved && prefersDark)) {
+    document.documentElement.setAttribute('data-theme','dark');
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('themeToggle');
+      if (btn) btn.textContent = '☀️ Light Mode';
+    });
+  }
+})();
 function toggleCard(card) {
   card.classList.toggle('open');
 }
