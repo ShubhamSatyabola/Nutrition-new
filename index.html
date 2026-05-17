@@ -128,8 +128,81 @@
   .legend { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 1.5rem 0 2rem; }
   .legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--muted); }
   .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-  @media print { header { background: #1e1b4b !important; } .unit-btn, .dl-btn { display: none; } .card-body { display: block !important; } }
-  @media (max-width: 600px) { header h1 { font-size: 1.5rem; } .topic-grid { grid-template-columns: 1fr; } }
+  /* ===== IMPORTANT QUESTIONS SECTION ===== */
+  .iq-section { margin-bottom: 2.5rem; }
+  .iq-hero { background: linear-gradient(135deg, #7c3aed 0%, #db2777 50%, #f59e0b 100%); border-radius: 20px; padding: 2rem 2rem 1.5rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+  .iq-hero::before { content: ''; position: absolute; top: -40px; right: -40px; width: 180px; height: 180px; background: rgba(255,255,255,0.06); border-radius: 50%; }
+  .iq-hero::after { content: ''; position: absolute; bottom: -30px; left: 30%; width: 120px; height: 120px; background: rgba(255,255,255,0.05); border-radius: 50%; }
+  .iq-hero-top { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .iq-fire-badge { background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.35); border-radius: 12px; padding: 0.5rem 1rem; font-size: 0.8rem; font-weight: 700; color: #fff; letter-spacing: 0.05em; text-transform: uppercase; backdrop-filter: blur(6px); }
+  .iq-hero h2 { font-family: 'Playfair Display', serif; font-size: 1.7rem; color: #fff; flex: 1; min-width: 200px; }
+  .iq-hero p { color: rgba(255,255,255,0.8); font-size: 0.88rem; margin-top: 0.5rem; }
+  .iq-stats { display: flex; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
+  .iq-stat { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 0.5rem 1rem; backdrop-filter: blur(4px); }
+  .iq-stat span { display: block; font-size: 1.3rem; font-weight: 700; color: #fff; }
+  .iq-stat small { font-size: 0.72rem; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.04em; }
+  /* Filter row */
+  .iq-filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; align-items: center; }
+  .iq-filter-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 0.3rem; }
+  .iq-filter { padding: 0.35rem 0.9rem; border-radius: 999px; font-size: 0.78rem; font-weight: 600; cursor: pointer; border: 2px solid var(--border); background: var(--card); color: var(--muted); transition: all 0.18s; }
+  .iq-filter:hover, .iq-filter.active { color: #fff; border-color: transparent; }
+  .iq-filter[data-unit="all"].active { background: #6d28d9; }
+  .iq-filter[data-unit="1"].active  { background: var(--u1); }
+  .iq-filter[data-unit="2"].active  { background: var(--u2); }
+  .iq-filter[data-unit="3"].active  { background: var(--u3); }
+  .iq-filter[data-unit="4"].active  { background: var(--u4); }
+  /* Q&A Cards */
+  .iq-list { display: flex; flex-direction: column; gap: 1rem; }
+  .iq-card { border-radius: 14px; border: 1.5px solid var(--border); background: var(--card); box-shadow: var(--shadow); overflow: hidden; transition: box-shadow 0.2s; }
+  .iq-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.13); }
+  .iq-q-row { display: flex; align-items: flex-start; gap: 0.9rem; padding: 1rem 1.2rem; cursor: pointer; user-select: none; }
+  .iq-qnum { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; color: #fff; flex-shrink: 0; margin-top: 1px; }
+  .iq-qtext-wrap { flex: 1; }
+  .iq-qtext { font-weight: 600; font-size: 0.96rem; color: var(--text); line-height: 1.45; }
+  .iq-meta { display: flex; gap: 0.5rem; margin-top: 0.4rem; flex-wrap: wrap; align-items: center; }
+  .iq-badge { font-size: 0.7rem; font-weight: 700; padding: 0.18rem 0.6rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .iq-badge-long  { background: #fef3c7; color: #92400e; }
+  .iq-badge-short { background: #e0f2fe; color: #075985; }
+  .iq-badge-hot   { background: #fce7f3; color: #9d174d; }
+  [data-theme="dark"] .iq-badge-long  { background: #451a03; color: #fcd34d; }
+  [data-theme="dark"] .iq-badge-short { background: #0c2340; color: #7dd3fc; }
+  [data-theme="dark"] .iq-badge-hot   { background: #500724; color: #f9a8d4; }
+  .iq-chevron { font-size: 1rem; color: var(--muted); transition: transform 0.25s; margin-top: 4px; flex-shrink: 0; }
+  .iq-card.open .iq-chevron { transform: rotate(180deg); }
+  .iq-answer { display: none; padding: 0 1.2rem 1.2rem 1.2rem; border-top: 1px solid var(--border); }
+  .iq-card.open .iq-answer { display: block; }
+  .iq-answer-inner { padding-top: 1rem; }
+  .iq-answer-inner h4 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.6rem; }
+  .iq-answer-inner p  { font-size: 0.875rem; color: var(--text); line-height: 1.7; margin-bottom: 0.6rem; }
+  .iq-answer-inner ul { list-style: none; padding: 0; margin-bottom: 0.6rem; }
+  .iq-answer-inner ul li { font-size: 0.85rem; color: var(--muted); padding: 0.25rem 0; display: flex; gap: 0.5rem; line-height: 1.55; }
+  .iq-answer-inner ul li::before { content: "▸"; flex-shrink: 0; font-size: 0.68rem; margin-top: 0.22rem; }
+  .iq-answer-inner .ans-block { background: var(--bg); border-radius: 10px; padding: 0.8rem 1rem; margin-top: 0.5rem; border-left: 3px solid; }
+  .iq-tip { display: flex; gap: 0.6rem; align-items: flex-start; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 0.6rem 0.8rem; margin-top: 0.7rem; font-size: 0.8rem; color: #78350f; }
+  [data-theme="dark"] .iq-tip { background: #292400; border-color: #713f12; color: #fcd34d; }
+  .iq-tip-icon { font-size: 1rem; flex-shrink: 0; }
+  /* unit accent left borders */
+  .iq-u1 .iq-qnum { background: var(--u1); }
+  .iq-u1 .iq-answer-inner .ans-block { border-color: var(--u1); }
+  .iq-u1 .iq-answer-inner ul li::before { color: var(--u1); }
+  .iq-u2 .iq-qnum { background: var(--u2); }
+  .iq-u2 .iq-answer-inner .ans-block { border-color: var(--u2); }
+  .iq-u2 .iq-answer-inner ul li::before { color: var(--u2); }
+  .iq-u3 .iq-qnum { background: var(--u3); }
+  .iq-u3 .iq-answer-inner .ans-block { border-color: var(--u3); }
+  .iq-u3 .iq-answer-inner ul li::before { color: var(--u3); }
+  .iq-u4 .iq-qnum { background: var(--u4); }
+  .iq-u4 .iq-answer-inner .ans-block { border-color: var(--u4); }
+  .iq-u4 .iq-answer-inner ul li::before { color: var(--u4); }
+  /* nav tab */
+  .page-nav { display: flex; gap: 0; border-radius: 14px; overflow: hidden; border: 2px solid var(--border); width: fit-content; margin: 0 auto 2rem; }
+  .nav-tab { padding: 0.6rem 1.5rem; font-size: 0.85rem; font-weight: 600; cursor: pointer; background: var(--card); color: var(--muted); border: none; transition: all 0.2s; border-right: 1px solid var(--border); }
+  .nav-tab:last-child { border-right: none; }
+  .nav-tab.active { background: linear-gradient(135deg,#7c3aed,#db2777); color: #fff; }
+  .page-section { display: none; }
+  .page-section.active { display: block; }
+  @media print { header { background: #1e1b4b !important; } .unit-btn, .dl-btn, .theme-btn, .iq-filter-row, .page-nav { display: none; } .card-body { display: block !important; } .iq-answer { display: block !important; } .page-section { display: block !important; } }
+  @media (max-width: 600px) { header h1 { font-size: 1.5rem; } .topic-grid { grid-template-columns: 1fr; } .iq-hero h2 { font-size: 1.3rem; } }
 </style>
 </head>
 <body>
@@ -144,10 +217,14 @@
     <button class="theme-btn" id="themeToggle" onclick="toggleTheme()">🌙 Dark Mode</button>
     <button class="dl-btn" onclick="window.print()">⬇ Download / Print PDF</button>
   </div>
+  <div class="toolbar" style="margin-top:1rem;">
+    <button class="nav-tab active" id="tab-mindmap" onclick="switchPage('mindmap')">🗺️ Mind Map</button>
+    <button class="nav-tab" id="tab-iq" onclick="switchPage('iq')">🔥 Important Questions</button>
+  </div>
 </header>
 
 <main>
-<div class="legend">
+<div id="page-mindmap" class="page-section active">
   <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div> Unit I</div>
   <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div> Unit II</div>
   <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div> Unit III</div>
@@ -937,9 +1014,884 @@
   </div>
 </div>
 
+</div><!-- end #page-mindmap -->
+
+<!-- ===================== IMPORTANT QUESTIONS PAGE ===================== -->
+<div id="page-iq" class="page-section">
+
+<div class="iq-section">
+  <!-- Hero Banner -->
+  <div class="iq-hero">
+    <div class="iq-hero-top">
+      <div class="iq-fire-badge">🔥 Exam Focus</div>
+      <h2>Important Questions & Model Answers</h2>
+    </div>
+    <p>Pandit B.D. Sharma University · Post Basic First Year · Nutrition & Dietetics — Unit-wise high-probability exam questions with detailed answers</p>
+    <div class="iq-stats">
+      <div class="iq-stat"><span>18</span><small>Questions</small></div>
+      <div class="iq-stat"><span>4</span><small>Units</small></div>
+      <div class="iq-stat"><span>Long + Short</span><small>Both Types</small></div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="iq-filter-row">
+    <span class="iq-filter-label">Filter:</span>
+    <button class="iq-filter active" data-unit="all" onclick="filterIQ('all',this)">All Units</button>
+    <button class="iq-filter" data-unit="1" onclick="filterIQ('1',this)">Unit I</button>
+    <button class="iq-filter" data-unit="2" onclick="filterIQ('2',this)">Unit II</button>
+    <button class="iq-filter" data-unit="3" onclick="filterIQ('3',this)">Unit III</button>
+    <button class="iq-filter" data-unit="4" onclick="filterIQ('4',this)">Unit IV</button>
+  </div>
+
+  <div class="iq-list">
+
+    <!-- ======= UNIT I ======= -->
+    <div class="iq-card iq-u1" data-unit="1">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">1</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Explain Food Hygiene in detail.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge" style="background:var(--u1l);color:var(--u1)">Unit I</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Definition:</strong> Food hygiene refers to all conditions and measures necessary to ensure the safety and suitability of food at all stages of the food chain — from production, processing, storage, distribution to preparation and consumption.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Key Principles of Food Hygiene</strong>
+            <ul>
+              <li><strong>Personal hygiene:</strong> Handwashing with soap before and after food handling; clean clothing and aprons; no handling of food when ill</li>
+              <li><strong>Safe storage:</strong> Store raw and cooked foods separately; refrigerate perishables below 5°C; use airtight containers</li>
+              <li><strong>Safe cooking temperatures:</strong> Cook meat/poultry to ≥75°C to kill pathogens; reheat food to ≥70°C</li>
+              <li><strong>Prevent cross-contamination:</strong> Use separate chopping boards for raw and cooked foods; clean utensils between uses</li>
+              <li><strong>Safe water and raw materials:</strong> Use potable water; wash fruits and vegetables thoroughly</li>
+              <li><strong>Clean environment:</strong> Regular cleaning and disinfection of kitchen surfaces, equipment, and utensils</li>
+              <li><strong>Pest control:</strong> Prevent entry of insects, rodents, and birds into food storage and preparation areas</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Food-borne Diseases (consequence of poor hygiene)</strong>
+            <ul>
+              <li>Salmonellosis, Typhoid, Cholera, Hepatitis A, Staphylococcal food poisoning</li>
+              <li>Common symptoms: vomiting, diarrhoea, abdominal pain, fever</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span><strong>Exam Tip:</strong> Use the WHO 5 Keys to Safer Food: Keep clean · Separate raw and cooked · Cook thoroughly · Keep food at safe temperatures · Use safe water and raw materials.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u1" data-unit="1">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">2</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Differentiate between Micronutrients and Macronutrients. Give sources and functions of each.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge" style="background:var(--u1l);color:var(--u1)">Unit I</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Macronutrients</strong> are nutrients required in large amounts to provide energy and structural support. They include Carbohydrates, Proteins, and Fats.</p>
+            <p><strong>Micronutrients</strong> are vitamins and minerals required in small (micro) amounts but are essential for normal physiological functions.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Macronutrients — Sources & Functions</strong>
+            <ul>
+              <li><strong>Carbohydrates (4 kcal/g):</strong> Sources — cereals, rice, wheat, potatoes, sugar. Function — primary energy source, spares protein, brain fuel</li>
+              <li><strong>Proteins (4 kcal/g):</strong> Sources — milk, eggs, meat, fish, pulses, legumes. Function — growth and repair, enzymes, hormones, antibodies</li>
+              <li><strong>Fats (9 kcal/g):</strong> Sources — oils, butter, nuts, seeds, meat. Function — energy reserve, fat-soluble vitamin transport (A, D, E, K), insulation</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Micronutrients — Key Examples</strong>
+            <ul>
+              <li><strong>Vitamin A:</strong> Sources — liver, eggs, carrots, green leafy vegetables. Function — vision, immunity, skin. Deficiency — Night blindness</li>
+              <li><strong>Vitamin C:</strong> Sources — citrus fruits, amla, guava. Function — collagen synthesis, antioxidant. Deficiency — Scurvy</li>
+              <li><strong>Iron:</strong> Sources — liver, spinach, jaggery, meat. Function — haemoglobin formation, oxygen transport. Deficiency — Anaemia</li>
+              <li><strong>Calcium:</strong> Sources — milk, dairy, ragi. Function — bone/teeth formation, muscle contraction. Deficiency — Rickets, Osteoporosis</li>
+              <li><strong>Iodine:</strong> Sources — iodised salt, sea fish. Function — thyroid hormone synthesis. Deficiency — Goitre, Cretinism</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Draw a comparison table in the exam — examiners love it. Columns: Nutrient | Required amount | Energy | Sources | Functions | Deficiency.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u1" data-unit="1">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">3</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Define Nutrition and Diet. Write a short note on Balanced Diet.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-short">Short Q</span>
+            <span class="iq-badge" style="background:var(--u1l);color:var(--u1)">Unit I</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Nutrition:</strong> The science that studies the relationship between diet and health. It is the process by which organisms take in and utilise food substances for growth, energy, and maintenance of body functions.</p>
+            <p><strong>Diet:</strong> The total food and drink consumed by an individual over a period of time. It is the sum of all foods habitually eaten.</p>
+            <p><strong>Balanced Diet:</strong> A diet that provides all essential nutrients — carbohydrates, proteins, fats, vitamins, minerals, and water — in the right quantities and proportions to meet the body's requirements for health, growth, and activity.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Components of a Balanced Diet (for an average adult)</strong>
+            <ul>
+              <li>Cereals & millets — 400–500 g/day (energy, B vitamins, fibre)</li>
+              <li>Pulses & legumes — 80–100 g/day (protein, iron)</li>
+              <li>Milk & dairy — 300–500 ml/day (calcium, protein, B12)</li>
+              <li>Vegetables — 300–400 g/day (vitamins, minerals, fibre)</li>
+              <li>Fruits — 100–150 g/day (vitamin C, antioxidants)</li>
+              <li>Fats & oils — 25–30 g/day (energy, EFAs)</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Quote ICMR guidelines for India-specific recommendations to impress the examiner.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= UNIT II ======= -->
+    <div class="iq-card iq-u2" data-unit="2">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">4</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Define Diet Therapy. Explain the Therapeutic Diet in Diabetes Mellitus in detail.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge iq-badge-hot">🔥 Most Important</span>
+            <span class="iq-badge" style="background:var(--u2l);color:var(--u2)">Unit II</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Diet Therapy:</strong> The branch of dietetics that involves the use of modified diets as a treatment modality to manage, prevent, or cure specific diseases or medical conditions. The aim is to improve health, alleviate symptoms, and correct nutritional deficiencies while accounting for the patient's disease state.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Therapeutic Diet in Diabetes Mellitus</strong>
+            <ul>
+              <li><strong>Goal:</strong> Maintain near-normal blood glucose levels; prevent complications (neuropathy, retinopathy, nephropathy); achieve/maintain healthy weight</li>
+              <li><strong>Calories:</strong> Based on IBW (Ideal Body Weight) — 25–30 kcal/kg/day for normal weight; 20 kcal/kg/day for obese diabetic</li>
+              <li><strong>Carbohydrates (50–55%):</strong> Complex, low-GI carbohydrates only — whole grains, oats, legumes, vegetables. Avoid refined sugar, white rice, maida, fruit juices</li>
+              <li><strong>Proteins (15–20%):</strong> 0.8–1 g/kg/day; lean meats, fish, pulses, low-fat dairy. Reduce if nephropathy present</li>
+              <li><strong>Fats (25–30%):</strong> Low saturated fat; avoid trans fats; prefer MUFA (olive oil) and PUFA (fish, flaxseed)</li>
+              <li><strong>Fibre:</strong> 25–40 g/day — slows glucose absorption; use oats, guar gum, vegetables</li>
+              <li><strong>Meal pattern:</strong> 3 main meals + 2–3 snacks; regular meal timing; avoid long fasting periods (hypoglycaemia risk)</li>
+              <li><strong>Exchange lists:</strong> Used to calculate carbohydrate portions systematically</li>
+              <li><strong>Avoid:</strong> Sugar, sweets, sweetened beverages, alcohol, high-GI fruits (mango, banana in excess)</li>
+              <li><strong>Micronutrients:</strong> Chromium, Magnesium, and Zinc improve insulin sensitivity; include whole grains and nuts</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span><strong>Remember:</strong> GI = Glycaemic Index. Low GI foods (≤55) are preferred. Cite the ADA (American Diabetes Association) or RSSDI (Indian) guidelines for marks.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u2" data-unit="2">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">5</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Explain the Diet in Cardiovascular Disease (CVD).</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge" style="background:var(--u2l);color:var(--u2)">Unit II</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Cardiovascular diseases</strong> include coronary artery disease (CAD), myocardial infarction (MI), hypertension, and congestive heart failure. Diet plays a central role in both prevention and management.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Dietary Goals in CVD</strong>
+            <ul>
+              <li><strong>Reduce saturated fat:</strong> &lt;7% of total calories; replace with MUFA (olive oil) and PUFA (fish oil). Lowers LDL cholesterol</li>
+              <li><strong>Eliminate trans fats:</strong> Avoid vanaspati, partially hydrogenated oils, processed snacks</li>
+              <li><strong>Limit cholesterol:</strong> &lt;200 mg/day in high-risk patients; avoid organ meats, egg yolk (excess), full-fat dairy</li>
+              <li><strong>Low sodium:</strong> 2–3 g/day for hypertension and heart failure; reduces fluid retention and BP. Avoid pickles, processed foods, papad, salt</li>
+              <li><strong>High fibre:</strong> 25–35 g/day; soluble fibre (oats, psyllium husk, fruits) lowers LDL cholesterol</li>
+              <li><strong>Omega-3 fatty acids:</strong> Fish (salmon, mackerel), flaxseed, walnuts — reduce triglycerides, decrease arrhythmia risk</li>
+              <li><strong>Antioxidants:</strong> Vitamins C and E, lycopene (tomatoes), flavonoids — prevent oxidation of LDL</li>
+              <li><strong>Weight management:</strong> Maintain BMI 18.5–24.9 to reduce cardiac load</li>
+              <li><strong>DASH Diet:</strong> Dietary Approaches to Stop Hypertension — rich in fruits, vegetables, low-fat dairy, whole grains; reduces BP by 8–14 mmHg</li>
+              <li><strong>Post-MI diet progression:</strong> Day 1 — liquid diet; Day 2–3 — soft diet 1200–1500 kcal; gradual return to normal</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Mention the DASH Diet by name — it scores extra marks. Also mention: Mediterranean diet is cardioprotective.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u2" data-unit="2">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">6</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Write short notes on Overweight and Underweight — causes, effects, and dietary management.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-short">Short Q</span>
+            <span class="iq-badge" style="background:var(--u2l);color:var(--u2)">Unit II</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="sub-group"><strong>Overweight (BMI 25–29.9) / Obesity (BMI ≥30)</strong>
+            <ul>
+              <li><strong>Causes:</strong> Excess calorie intake, sedentary lifestyle, hormonal disorders (hypothyroid, PCOD), genetic factors, emotional eating</li>
+              <li><strong>Health effects:</strong> T2DM, hypertension, CVD, sleep apnoea, joint problems, NAFLD, certain cancers</li>
+              <li><strong>Dietary management:</strong> Calorie deficit of 500–750 kcal/day; high protein (satiety), high fibre, low refined carbohydrates and fat; small frequent meals; avoid sugary drinks; behavioural counselling</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Underweight (BMI &lt;18.5)</strong>
+            <ul>
+              <li><strong>Causes:</strong> Inadequate food intake, malabsorption, chronic illness, poverty, psychological disorders (anorexia nervosa)</li>
+              <li><strong>Health effects:</strong> Malnutrition, anaemia, immune deficiency, stunted growth in children, amenorrhoea</li>
+              <li><strong>Dietary management:</strong> High calorie (500 kcal above TDEE), high protein (1.5–2 g/kg), nutrient-dense foods — nuts, milk, eggs, avocado; 5–6 meals/day; treat underlying cause</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Always use WHO BMI classification. Exam formula: BMI = Weight(kg) / Height(m)²</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u2" data-unit="2">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">7</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Explain Routine Hospital Diets with examples.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge" style="background:var(--u2l);color:var(--u2)">Unit II</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p>Routine hospital diets are standardised diets provided to patients without specific therapeutic dietary restrictions. They are planned to meet nutritional requirements while accommodating the patient's physical condition.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Types of Routine Hospital Diets</strong>
+            <ul>
+              <li><strong>1. Normal/Regular Diet:</strong> For ambulant patients with no dietary restrictions. Contains ~2000 kcal, 60–80 g protein. Includes all food groups. Example: rice, dal, sabzi, roti, milk, fruit</li>
+              <li><strong>2. Soft Diet:</strong> For post-operative patients, elderly, those with dental issues. Soft, moist, easy-to-chew foods. Avoid raw vegetables, hard meats. Example: khichdi, curd, mashed potato, steamed vegetables</li>
+              <li><strong>3. Semi-Liquid Diet:</strong> For acute illness, difficulty chewing/swallowing. Foods that are fluid or become fluid in mouth. Example: rice gruel, dal water, custard, milk-based soups</li>
+              <li><strong>4. Full Liquid Diet:</strong> For patients with chewing/swallowing difficulty, high fever, GI upset. All foods liquid at room/body temperature. Example: milk, fruit juices, strained soups, ice cream, milkshake</li>
+              <li><strong>5. Clear Liquid Diet:</strong> Post-surgery, before colonoscopy, severe nausea. Only clear fluids that leave no residue. Example: broth, water, clear fruit juice (no pulp), ORS, black tea</li>
+              <li><strong>6. High Fibre Diet:</strong> For constipation, diverticulosis, IBS. &gt;30g fibre/day. Example: whole grains, raw vegetables, fruits, psyllium husk</li>
+              <li><strong>7. Light Diet:</strong> Transition between liquid and regular diet. Easily digestible. Low fat, no spice, no fried food</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Draw a table in exam: Diet type | Consistency | Indication | Example foods — very impactful presentation.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= UNIT III ======= -->
+    <div class="iq-card iq-u3" data-unit="3">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">8</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Explain the Nutritional Needs of Pre-school Children (1–6 years) in detail.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge iq-badge-hot">🔥 Most Important</span>
+            <span class="iq-badge" style="background:var(--u3l);color:var(--u3)">Unit III</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p>The pre-school period (1–6 years) is characterised by rapid physical and cognitive development. Growth is slower than infancy but remains significant, making adequate nutrition critically important.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Nutritional Requirements (ICMR)</strong>
+            <ul>
+              <li><strong>Energy:</strong> 1–3 years: 1000 kcal/day; 4–6 years: 1350 kcal/day</li>
+              <li><strong>Protein:</strong> 16–20 g/day; essential for muscle development and immune function</li>
+              <li><strong>Calcium:</strong> 600–800 mg/day for bone and teeth formation</li>
+              <li><strong>Iron:</strong> 9–12 mg/day to prevent IDA (Iron Deficiency Anaemia); give with Vitamin C for better absorption</li>
+              <li><strong>Vitamin A:</strong> 400 μg RE/day — vision, immunity; include green leafy vegetables, eggs, milk</li>
+              <li><strong>Vitamin D:</strong> Sunlight exposure + fortified milk; 400–600 IU/day</li>
+              <li><strong>Zinc:</strong> 5–8 mg/day — growth, wound healing, immunity</li>
+              <li><strong>Water:</strong> 1–1.5 litres/day</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Factors to consider in diet planning</strong>
+            <ul>
+              <li>Small stomach capacity — offer 5–6 small meals/day instead of 3 large ones</li>
+              <li>Food neophobia (fear of new foods) — introduce new foods repeatedly and patiently</li>
+              <li>Easy-to-eat textures — avoid choking hazards</li>
+              <li>Variety of colours and flavours to develop healthy food habits early</li>
+              <li>Avoid excess sugar, salt, processed snacks</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Common Feeding Problems</strong>
+            <ul>
+              <li>Food jags (eating only one food for weeks)</li>
+              <li>Poor appetite (physiological — growth slows in toddler period)</li>
+              <li>Dental caries due to sticky sweet snacks</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Quote ICMR 2020 RDA values wherever possible. Mention Anganwadi centres under ICDS as a practical example of pre-school nutrition support.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u3" data-unit="3">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">9</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Describe Supplementary Feeding — its purpose, advantages, and method of introduction.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge" style="background:var(--u3l);color:var(--u3)">Unit III</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Supplementary feeding</strong> (complementary feeding) refers to the introduction of foods and liquids other than breast milk to meet the growing nutritional needs of an infant, typically from 6 months of age while breastfeeding continues.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Advantages</strong>
+            <ul>
+              <li>Bridges the energy-nutrient gap — breast milk alone meets only ~50% of energy needs at 6 months</li>
+              <li>Provides iron, zinc, Vitamin B12, and other nutrients not adequately supplied by breast milk after 6 months</li>
+              <li>Promotes development of chewing and swallowing skills</li>
+              <li>Develops food preferences and acceptance of varied tastes/textures</li>
+              <li>Supports physical growth and cognitive development</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Method of Introduction (WHO Guidelines)</strong>
+            <ul>
+              <li>Start at exactly 6 months (not before 4 months)</li>
+              <li>Introduce ONE new food at a time; wait 3–5 days before adding another to check for allergies</li>
+              <li>Start with single-ingredient, iron-rich foods: rice/dal porridge, mashed vegetables, soft fruit puree</li>
+              <li>Texture progression: Smooth puree → Mashed → Minced → Chopped → Family foods</li>
+              <li>Frequency: 2–3 times/day at 6–8 months; 3–4 times/day at 9–12 months</li>
+              <li>No added salt, sugar, or honey under 12 months</li>
+              <li>Continue breastfeeding alongside complementary foods up to 2 years</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span><strong>Key terms:</strong> Complementary feeding = supplementary feeding. Weaning begins at 6 months. Avoid cow's milk as main drink before 12 months (renal solute load).</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u3" data-unit="3">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">10</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Define Weaning. Explain its methods and effects on both mother and child.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge" style="background:var(--u3l);color:var(--u3)">Unit III</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Weaning:</strong> The gradual process of transitioning an infant from breast milk (or formula) to other foods and eventually withdrawing breastfeeding. It is a physiological, nutritional, and psychological process.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Methods of Weaning</strong>
+            <ul>
+              <li><strong>Gradual weaning (preferred):</strong> Slowly replace one breastfeed at a time with solid food/cup feeding over weeks to months. Allows infant to adjust and avoids breast engorgement in mother</li>
+              <li><strong>Baby-led weaning:</strong> Allow the infant to self-feed finger foods from 6 months alongside breast milk</li>
+              <li><strong>Abrupt weaning (not recommended):</strong> Sudden cessation — causes distress in infant and engorgement/mastitis in mother</li>
+              <li>WHO recommends breastfeeding until 2 years or beyond; weaning starts at 6 months with complementary foods</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Effects on the Child</strong>
+            <ul>
+              <li>Positive (if gradual and nutritious): promotes independence, dietary diversity, motor skill development</li>
+              <li>Negative (if abrupt or poor quality food): risk of diarrhoea, malnutrition (Kwashiorkor if protein-poor weaning foods), dehydration, emotional insecurity</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Effects on the Mother</strong>
+            <ul>
+              <li>Return of menstrual cycle and fertility (lactational amenorrhoea ends)</li>
+              <li>Breast engorgement and discomfort if weaning is abrupt; risk of mastitis</li>
+              <li>Emotional aspects — sense of loss or relief depending on circumstances</li>
+              <li>Reduced oxytocin; may affect mother-infant bonding if done abruptly</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Mention LAM (Lactational Amenorrhoea Method) — breastfeeding suppresses ovulation for 6 months (if exclusive). Weaning ends this protection.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u3" data-unit="3">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">11</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Explain Malnutrition in detail — types, causes, signs, and management.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge iq-badge-hot">🔥 Most Important</span>
+            <span class="iq-badge" style="background:var(--u3l);color:var(--u3)">Unit III</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Malnutrition</strong> refers to deficiencies, excesses, or imbalances in a person's intake of energy and/or nutrients. It encompasses both undernutrition and overnutrition.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Types of Malnutrition</strong>
+            <ul>
+              <li><strong>Undernutrition:</strong> PEM (Protein Energy Malnutrition), micronutrient deficiencies (hidden hunger), stunting, wasting, underweight</li>
+              <li><strong>Overnutrition:</strong> Obesity, overweight, diet-related NCDs</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>PEM — Kwashiorkor vs Marasmus</strong>
+            <ul>
+              <li><strong>Kwashiorkor:</strong> Protein deficiency with adequate calorie intake. Signs — pitting oedema (hallmark), moon face, pot belly (ascites), skin lesions (flaky paint appearance), hair discolouration (flag sign), apathy</li>
+              <li><strong>Marasmus:</strong> Severe calorie and protein deficiency. Signs — severe wasting (skin and bones), sunken eyes, wizened face, no oedema, child alert but weak, baggy trousers appearance</li>
+              <li><strong>Marasmic-Kwashiorkor:</strong> Features of both</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Causes</strong>
+            <ul>
+              <li>Poverty and food insecurity</li>
+              <li>Early cessation of breastfeeding; poor complementary feeding practices</li>
+              <li>Infections (diarrhoea, measles, TB) — increase nutrient requirements and reduce absorption</li>
+              <li>Ignorance about nutrition</li>
+              <li>Large family size; gender discrimination in food distribution</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Management</strong>
+            <ul>
+              <li>WHO 10-Step Protocol for Severe Acute Malnutrition (SAM)</li>
+              <li>F-75 therapeutic milk (stabilisation phase) → F-100 (rehabilitation phase)</li>
+              <li>Treat infections, vitamin and mineral supplementation</li>
+              <li>Nutrition counselling for caretakers; follow-up at community level</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Remember the difference: Kwashiorkor = oedema present; Marasmus = no oedema, severe wasting. Mnemonic — <strong>K</strong>washiorkor has <strong>K</strong>ind of puffy face.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= UNIT IV ======= -->
+    <div class="iq-card iq-u4" data-unit="4">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">12</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Describe the Mid-Day Meal Programme — need, objectives, and benefits in India.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge" style="background:var(--u4l);color:var(--u4)">Unit IV</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p>The <strong>Mid-Day Meal Scheme (MDMS)</strong>, now renamed <strong>PM POSHAN Shakti Nirman</strong> (2021), is India's flagship school nutrition programme launched in 1995. It provides hot cooked meals to children in government and government-aided schools.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Nutritional Standards</strong>
+            <ul>
+              <li>Primary (Class I–V): Minimum 450 kcal + 12 g protein per meal</li>
+              <li>Upper primary (Class VI–VIII): Minimum 700 kcal + 20 g protein per meal</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Objectives</strong>
+            <ul>
+              <li>Improve nutritional status of school children</li>
+              <li>Increase school enrolment, attendance, and retention</li>
+              <li>Reduce classroom hunger and improve learning capacity</li>
+              <li>Bridge gender gap — girls' attendance increases significantly</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Benefits (Achievements)</strong>
+            <ul>
+              <li>Covers over 120 million children across India — world's largest school feeding programme</li>
+              <li>Reduced absenteeism and dropout rates, especially in rural areas</li>
+              <li>Improved haemoglobin levels, reduced anaemia in children</li>
+              <li>Social benefits — children of different castes eat together (social integration)</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Challenges</strong>
+            <ul>
+              <li>Quality and hygiene of food preparation varies</li>
+              <li>Irregular supply of food grains</li>
+              <li>Poor infrastructure in some schools</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>New name since 2021: <strong>PM POSHAN Shakti Nirman</strong>. Always mention it in exams for updated knowledge marks.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u4" data-unit="4">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">13</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Describe the Integrated Child Development Services (ICDS) programme.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge iq-badge-hot">🔥 Most Important</span>
+            <span class="iq-badge" style="background:var(--u4l);color:var(--u4)">Unit IV</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p>ICDS (Integrated Child Development Services) is India's largest and most significant programme for early childhood care and development. Launched in <strong>1975</strong>, it targets children under 6 years, pregnant women, and lactating mothers.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Objectives</strong>
+            <ul>
+              <li>Improve nutritional and health status of children 0–6 years</li>
+              <li>Lay the foundation for proper psychological, physical, and social development</li>
+              <li>Reduce incidence of mortality, morbidity, malnutrition, and school dropout</li>
+              <li>Enhance the capability of mothers to provide nutrition and health care to children</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>6 Services provided under ICDS (through Anganwadi centres)</strong>
+            <ul>
+              <li>1. Supplementary nutrition — 300 kcal + 8–10 g protein/day for children; 500 kcal + 25 g protein for pregnant/lactating women</li>
+              <li>2. Immunisation (BCG, DPT, OPV, Measles, Hepatitis B)</li>
+              <li>3. Health check-up — growth monitoring, anaemia screening</li>
+              <li>4. Referral services — severely malnourished children referred to NRC (Nutrition Rehabilitation Centres)</li>
+              <li>5. Pre-school non-formal education (children 3–6 years)</li>
+              <li>6. Nutrition and health education for women 15–45 years</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Beneficiaries & Delivery</strong>
+            <ul>
+              <li>Delivered through Anganwadi Centres (AWCs) — over 1.3 million AWCs across India</li>
+              <li>Anganwadi Worker (AWW) and Anganwadi Helper (AWH) — grassroots functionaries</li>
+              <li>Link with ASHA workers and ANM for convergence</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Memorise the 6 services — this is a direct exam question. Launched in 1975 on 2nd October (Gandhi Jayanti).</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u4" data-unit="4">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">14</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Explain Protein Energy Malnutrition (PEM) — types, causes, clinical features, and management.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge iq-badge-hot">🔥 Variant Topic</span>
+            <span class="iq-badge" style="background:var(--u4l);color:var(--u4)">Unit IV</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>PEM (Protein Energy Malnutrition)</strong> is a spectrum of conditions resulting from simultaneous deficiency of protein and energy, most commonly affecting children under 5 in low-income countries. It is the most common form of childhood malnutrition globally.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Types of PEM</strong>
+            <ul>
+              <li><strong>Kwashiorkor:</strong> Predominant protein deficiency. Oedema, moon face, skin changes, hair discolouration, apathy, hepatomegaly. No severe wasting initially</li>
+              <li><strong>Marasmus:</strong> Severe calorie + protein deficiency. Gross wasting, no oedema, child irritable, muscle wasting, loss of subcutaneous fat</li>
+              <li><strong>Marasmic-Kwashiorkor:</strong> Features of both (oedema + wasting)</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Causes</strong>
+            <ul>
+              <li>Early weaning with protein-poor diet (starchy gruels)</li>
+              <li>Repeated infections (diarrhoea, measles) → increased catabolism</li>
+              <li>Poverty, food insecurity, low maternal literacy</li>
+              <li>Low birth weight (LBW) — poor nutritional start</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Assessment — Wellcome Classification</strong>
+            <ul>
+              <li>Based on % expected weight and presence of oedema</li>
+              <li>SAM (Severe Acute Malnutrition): MUAC &lt;11.5 cm or W/H &lt;-3 SD or bilateral oedema</li>
+              <li>MAM (Moderate Acute Malnutrition): MUAC 11.5–12.4 cm or W/H -2 to -3 SD</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Management (WHO 10-step protocol)</strong>
+            <ul>
+              <li>Treat/prevent hypoglycaemia, hypothermia, dehydration</li>
+              <li>Correct electrolyte imbalance; treat infections</li>
+              <li>F-75 diet (stabilisation: 75 kcal/100ml) → F-100 (rehabilitation: 100 kcal/100ml)</li>
+              <li>RUTF (Ready-to-Use Therapeutic Food) — Plumpy Nut</li>
+              <li>Provide sensory stimulation and emotional support</li>
+              <li>Prepare for discharge; follow-up at community level</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>PEM is both a Unit III and Unit IV topic — it can appear in either unit's question. Know both clinical (Unit III) and community prevention (Unit IV) angles.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u4" data-unit="4">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">15</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Explain the Nutritional Needs of Pregnant and Lactating Women.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge iq-badge-hot">🔥 Most Important</span>
+            <span class="iq-badge" style="background:var(--u4l);color:var(--u4)">Unit IV</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="sub-group"><strong>Nutritional Needs During Pregnancy (ICMR 2020)</strong>
+            <ul>
+              <li><strong>Energy:</strong> +350 kcal/day (2nd trimester); +450 kcal/day (3rd trimester) above normal requirement</li>
+              <li><strong>Protein:</strong> +23 g/day above normal (for foetal growth, placenta, amniotic fluid, breast tissue)</li>
+              <li><strong>Iron:</strong> 35 mg/day — to meet increased maternal blood volume + foetal iron stores (IFA supplementation under National Programme)</li>
+              <li><strong>Folic acid:</strong> 500 μg/day — critical in first trimester to prevent Neural Tube Defects (spina bifida, anencephaly)</li>
+              <li><strong>Calcium:</strong> 1200 mg/day — for foetal skeletal development; prevents maternal bone loss</li>
+              <li><strong>Iodine:</strong> 220 μg/day — essential for foetal brain and thyroid development; use iodised salt</li>
+              <li><strong>Vitamin D:</strong> 600 IU/day — aids calcium absorption</li>
+              <li><strong>Water:</strong> 2.5–3 litres/day</li>
+              <li><strong>Avoid:</strong> Alcohol, raw meat, unpasteurised dairy, excess vitamin A (teratogenic), caffeine &gt;200 mg/day</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Nutritional Needs During Lactation (ICMR 2020)</strong>
+            <ul>
+              <li><strong>Energy:</strong> +500 kcal/day above normal (to produce ~800 ml breast milk/day)</li>
+              <li><strong>Protein:</strong> +25 g/day; ensures adequate protein in breast milk</li>
+              <li><strong>Calcium:</strong> 1200 mg/day; prevents osteoporosis in mother</li>
+              <li><strong>Vitamin A:</strong> 950 μg RE/day (colostrum rich in Vit A — protects newborn from infections)</li>
+              <li><strong>Fluid:</strong> 3 litres/day — maintains milk volume</li>
+              <li><strong>Iron:</strong> Requirements reduce post-delivery (no menstruation), but continue IFA for 6 months postpartum</li>
+              <li><strong>Avoid:</strong> Smoking, alcohol, excess caffeine (passes into breast milk)</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Key mnemonic for pregnancy nutrients: <strong>FIFIC</strong> — Folate, Iron, Iodine, Calcium. These are the 4 most commonly deficient and most commonly asked about.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u4" data-unit="4">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">16</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Explain Nutritional Education — its need, methods, and aids used.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge" style="background:var(--u4l);color:var(--u4)">Unit IV</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Nutritional Education</strong> is the process of imparting knowledge, developing positive attitudes, and bringing about behaviour change related to food and nutrition for the improvement of health and prevention of disease.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Need for Nutritional Education</strong>
+            <ul>
+              <li>High prevalence of malnutrition, anaemia, and micronutrient deficiencies in India</li>
+              <li>Poor dietary practices and food myths in communities</li>
+              <li>Rising NCDs (diabetes, CVD, obesity) linked to unhealthy diets</li>
+              <li>To empower communities to make informed food choices</li>
+              <li>Changing food habits due to urbanisation and processed foods</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Methods of Nutritional Education</strong>
+            <ul>
+              <li><strong>Individual counselling:</strong> One-on-one diet counselling (hospitals, clinics, ICDS centres); most effective but time-intensive</li>
+              <li><strong>Group education:</strong> Lectures, discussions at PHCs, Anganwadis, schools; cost-effective and wider reach</li>
+              <li><strong>Demonstration:</strong> Cooking demonstrations — practical, hands-on; changes cooking behaviour</li>
+              <li><strong>School-based nutrition education:</strong> Incorporating in curriculum; teaches children lifelong habits</li>
+              <li><strong>Mass media:</strong> TV, radio, newspapers, social media (most wide-reaching); used in national campaigns</li>
+              <li><strong>Community approaches:</strong> Nukkad nataks, self-help groups, ASHA workers as nutrition educators</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Nutritional Education Aids</strong>
+            <ul>
+              <li><strong>Visual aids:</strong> Posters, charts, food models, flash cards, flip charts</li>
+              <li><strong>Audio aids:</strong> Radio broadcasts, audio recordings</li>
+              <li><strong>Audio-visual aids:</strong> Films, documentaries, TV programmes, YouTube videos</li>
+              <li><strong>Print materials:</strong> Pamphlets, booklets, food guides (ICMR food plate)</li>
+              <li><strong>Demonstrations/exhibits:</strong> Food models, actual food samples</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Classify aids as: Visual, Audio, Audio-Visual, and Print — this organisation earns full marks in an exam.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u4" data-unit="4">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">17</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Write the Methods of Assessing Nutritional Status of an Individual, Group, and Community.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-long">Long Q</span>
+            <span class="iq-badge iq-badge-hot">🔥 Most Important</span>
+            <span class="iq-badge" style="background:var(--u4l);color:var(--u4)">Unit IV</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p>Nutritional status is assessed using the <strong>ABCD method</strong> — Anthropometric, Biochemical, Clinical, and Dietary assessment. Additional community-level methods are used for group and population assessment.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>A — Anthropometric Assessment</strong>
+            <ul>
+              <li>Weight, height, BMI — most widely used; non-invasive</li>
+              <li>MUAC (Mid-Upper Arm Circumference) — for SAM/MAM in children; &lt;11.5 cm = SAM</li>
+              <li>Skinfold thickness (triceps, biceps) — estimates body fat</li>
+              <li>Head circumference, chest circumference — infants</li>
+              <li>Z-scores: WAZ (weight-for-age), HAZ (height-for-age = stunting), WHZ (weight-for-height = wasting)</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>B — Biochemical Assessment</strong>
+            <ul>
+              <li>Haemoglobin — IDA screening (normal: men &gt;13 g/dL; women &gt;12 g/dL)</li>
+              <li>Serum albumin — protein status (&lt;3.5 g/dL = hypoalbuminaemia)</li>
+              <li>Serum ferritin — iron stores</li>
+              <li>Serum retinol — vitamin A status</li>
+              <li>Urine iodine — iodine sufficiency</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>C — Clinical Assessment</strong>
+            <ul>
+              <li>Pallor (conjunctiva, nail beds) — anaemia</li>
+              <li>Bitot's spots, xerophthalmia — Vitamin A deficiency</li>
+              <li>Oedema — Kwashiorkor, hypoalbuminaemia</li>
+              <li>Goitre — iodine deficiency</li>
+              <li>Glossitis, angular stomatitis — B-complex deficiency</li>
+              <li>Bow legs, rickets — Vitamin D deficiency</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>D — Dietary Assessment</strong>
+            <ul>
+              <li>24-hour dietary recall — quick, easy, most common</li>
+              <li>Food Frequency Questionnaire (FFQ) — habitual diet over weeks/months</li>
+              <li>Food diary/record — prospective; 3–7 day recording</li>
+              <li>Dietary history — in-depth past dietary pattern</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Community/Group Level Methods</strong>
+            <ul>
+              <li>National surveys — NFHS (National Family Health Survey), NNS (National Nutrition Survey)</li>
+              <li>Vital statistics — IMR, U5MR, MMR as indirect nutritional indicators</li>
+              <li>Ecological assessment — agricultural production data, food supply statistics</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span><strong>ABCD</strong> = most important 4-letter word in this subject. Use these exact headings in your answer for a structured, high-scoring response.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="iq-card iq-u4" data-unit="4">
+      <div class="iq-q-row" onclick="toggleIQ(this)">
+        <div class="iq-qnum">18</div>
+        <div class="iq-qtext-wrap">
+          <div class="iq-qtext">Write about Community Nutrition — its scope, need, and programmes in India.</div>
+          <div class="iq-meta">
+            <span class="iq-badge iq-badge-short">Short Q</span>
+            <span class="iq-badge" style="background:var(--u4l);color:var(--u4)">Unit IV</span>
+          </div>
+        </div>
+        <span class="iq-chevron">▾</span>
+      </div>
+      <div class="iq-answer">
+        <div class="iq-answer-inner">
+          <h4>Model Answer</h4>
+          <div class="ans-block">
+            <p><strong>Community Nutrition</strong> is the application of nutrition knowledge and skills to promote, maintain, and restore the nutritional health of populations through community-based interventions, education, and policy.</p>
+          </div>
+          <div class="sub-group" style="margin-top:0.8rem"><strong>Need for Community Nutrition</strong>
+            <ul>
+              <li>High burden of malnutrition in vulnerable groups (infants, children, pregnant/lactating women, elderly)</li>
+              <li>Widespread micronutrient deficiencies (hidden hunger)</li>
+              <li>Rising NCDs — diet is modifiable risk factor</li>
+              <li>Individual-level interventions alone insufficient — population-level strategies needed</li>
+            </ul>
+          </div>
+          <div class="sub-group"><strong>Key National Nutrition Programmes in India</strong>
+            <ul>
+              <li><strong>ICDS</strong> — children under 6, pregnant/lactating women (since 1975)</li>
+              <li><strong>PM POSHAN</strong> (formerly Mid-Day Meal) — school children (since 1995)</li>
+              <li><strong>POSHAN Abhiyaan 2.0</strong> (2018) — targets stunting, wasting, anaemia, LBW</li>
+              <li><strong>National Iron+ Initiative</strong> — weekly IFA for children 6 months–19 years; daily for pregnant women</li>
+              <li><strong>Vitamin A Supplementation Programme</strong> — 6-monthly mega doses for children 9 months–5 years</li>
+              <li><strong>National IDD Control Programme</strong> — universal iodisation of salt (&gt;15 ppm iodine)</li>
+              <li><strong>Food Fortification</strong> — rice, wheat flour, edible oils with micronutrients (FSSAI)</li>
+            </ul>
+          </div>
+          <div class="iq-tip"><span class="iq-tip-icon">💡</span><span>Listing at least 5 national programmes with launch years and targets will score you high marks on this question.</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end iq-list -->
+</div><!-- end iq-section -->
+
+</div><!-- end #page-iq -->
+
 </main>
 
 <script>
+function toggleIQ(row) {
+  const card = row.closest('.iq-card');
+  card.classList.toggle('open');
+}
+function filterIQ(unit, btn) {
+  document.querySelectorAll('.iq-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.iq-card').forEach(card => {
+    card.style.display = (unit === 'all' || card.dataset.unit === unit) ? '' : 'none';
+  });
+}
+function switchPage(page) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.getElementById('tab-' + page).classList.add('active');
+  // Show/hide unit filter buttons in toolbar
+  const unitBtns = document.querySelectorAll('.unit-btn');
+  unitBtns.forEach(b => b.style.display = page === 'mindmap' ? '' : 'none');
+}
 function toggleTheme() {
   const html = document.documentElement;
   const btn = document.getElementById('themeToggle');
